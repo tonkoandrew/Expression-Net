@@ -24,9 +24,9 @@ The code provided here bundles all three components for holistic 3D face modelin
 * [TensorFlow](https://www.tensorflow.org/)
 * [OpenCV Python Wrapper](http://opencv.org/)
 * [Numpy](http://www.numpy.org/)
-* [Python2.7](https://www.python.org/download/releases/2.7/)
+* [Python3.5](https://www.python.org/downloads/release/python-352/)
 
-The code has been tested on Linux with Python 2.7.12. On Linux you can rely on the default version of python, installing all the packages needed from the package manager or on Anaconda Python and install required packages through `conda`. 
+The code has been tested on Linux with Python 3.5.2. On Linux you can rely on the default version of python, installing all the packages needed from the package manager or on Anaconda Python and install required packages through `conda`. 
 
 
 ## Usage

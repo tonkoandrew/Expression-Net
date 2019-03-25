@@ -32,7 +32,7 @@ inputlist = sys.argv[1] # You can try './input.csv' or input your own file
 
 # Global parameters
 _tmpdir = './tmp/'#save intermediate images needed to fed into ExpNet, ShapeNet, and PoseNet                                                                                                                                                       
-print '> make dir'
+print('> make dir')
 if not os.path.exists( _tmpdir):
         os.makedirs( _tmpdir )
 output_proc = 'output_preproc.csv' # save intermediate image list
@@ -71,9 +71,9 @@ def extract_PSE_feats():
 
 	# Prepare data
         data_dict = myparse.parse_input(inputlist) # please see input.csv for the input format
-        print len(data_dict)
+        print(len(data_dict))
         ## Pre-processing the images                                                                                                                                                                              
-        print '> preproc'
+        print('> preproc')
         pu.preProcessImage(_tmpdir, data_dict, './', factor, _alexNetSize, output_proc)
 
 
@@ -86,7 +86,7 @@ def extract_PSE_feats():
         ###################
         # Face Pose-Net
         ###################
-        net_data = np.load("./fpn_new_model/PAM_frontal_ALexNet.npy").item()
+        net_data = np.load("./fpn_new_model/PAM_frontal_ALexNet_py3.npy").item()
         pose_labels = np.zeros([FLAGS.batch_size,6])
         x1 = tf.image.resize_bilinear(x, tf.constant([227,227], dtype=tf.int32))
         
@@ -195,19 +195,19 @@ def extract_PSE_feats():
                 model = scipy.io.loadmat(BFM_path,squeeze_me=True,struct_as_record=False)
                 model = model["BFM"]
                 faces = model.faces-1
-                print '> Loaded the Basel Face Model to write the 3D output!'
+                print('> Loaded the Basel Face Model to write the 3D output!')
 
 
                
-                print '> Start to estimate Expression, Shape, and Pose!'
-                with open(output_proc, 'rb') as csvfile:
+                print('> Start to estimate Expression, Shape, and Pose!')
+                with open(output_proc, 'r') as csvfile:
                         csvreader = csv.reader(csvfile, delimiter=',')
                         for row in csvreader:
-
                                 image_key = row[0]
                                 image_file_path = row[1]
 
-                                print '> Process ' + image_file_path
+                                start = time.time()
+                                print('> Process ' + image_file_path)
 
                                 
                                 image = cv2.imread(image_file_path,1) # BGR                                                                                  
@@ -251,6 +251,9 @@ def extract_PSE_feats():
                                 # Shape + Expression + Pose
                                 SEP,TEP = utils.projectBackBFM_withEP(model, Shape_Texture, Expr, Pose)
                                 utils.write_ply_textureless(outFile + '_Shape_Expr_Pose.ply', SEP, faces)
+                                end = time.time()
+
+                                print(end - start)
 
 
                                

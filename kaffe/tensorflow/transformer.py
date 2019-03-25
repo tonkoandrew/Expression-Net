@@ -44,7 +44,7 @@ class TensorFlowNode(object):
 
     def format(self, arg):
         '''Returns a string representation for the given value.'''
-        return "'%s'" % arg if isinstance(arg, basestring) else str(arg)
+        return "'%s'" % arg if isinstance(arg, (str, bytes)) else str(arg)
 
     def pair(self, key, value):
         '''Returns key=formatted(value).'''

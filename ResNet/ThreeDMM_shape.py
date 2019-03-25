@@ -1,6 +1,8 @@
 import sys
-#sys.path.append('../kaffe')
-sys.path.append('/home/usc/Desktop/Research/FG18/ExpNet_Code_Release/kaffe/tensorflow')
+from os.path import dirname, join
+
+sys.path.append(join(dirname(dirname(__file__)), 'kaffe', 'tensorflow'))
+
 from network_shape import Network_Shape
 
 

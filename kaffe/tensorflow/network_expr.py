@@ -137,7 +137,7 @@ class Network_Expr(object):
         assert len(args) != 0
         self.terminals = []
         for fed_layer in args:
-            if isinstance(fed_layer, basestring):
+            if isinstance(fed_layer, (str, bytes)):
                 try:
                     fed_layer = self.layers[fed_layer]
                 except KeyError:
@@ -197,9 +197,9 @@ class Network_Expr(object):
         with tf.variable_scope(name) as scope:
             if name == 'res5c_branch2c' or name == 'res5c_branch2b' or name == 'res5c_branch2a' or \
                name == 'res5b_branch2c' or name == 'res5b_branch2b' or name == 'res5b_branch2a':   
-                kernel = self.make_var('weights', shape=[k_h, k_w, c_i / group, c_o])
+                kernel = self.make_var('weights', shape=[k_h, k_w, int(c_i) / group, c_o])
             else:
-                kernel = self.make_var_fixed('weights', shape=[k_h, k_w, c_i / group, c_o])
+                kernel = self.make_var_fixed('weights', shape=[k_h, k_w, int(c_i) / group, c_o])
 
             if group == 1:
                 # This is the common-case. Convolve the input without any further complications.
